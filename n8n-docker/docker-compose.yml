@@ -6,7 +6,7 @@ services:
     ports:
       - "5678:5678"
     environment:
-      - N8N_ENCRYPTION_KEY=Abaneon1812 # Sangat Penting!
+      - N8N_ENCRYPTION_KEY=PasswordAnda # Sangat Penting!
       - TZ=Asia/Jakarta
       - N8N_SECURE_COOKIE=false  # Tambahkan baris ini
     volumes:
