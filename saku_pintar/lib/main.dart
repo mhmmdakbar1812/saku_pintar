@@ -9,8 +9,8 @@ void main() async {
   
   // Pastikan URL dan Anon Key Supabase sudah kamu isi dengan benar
   await Supabase.initialize(
-    url: 'https://kloyuickgaxyeqhahrgu.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtsb3l1aWNrZ2F4eWVxaGFocmd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2ODExODYsImV4cCI6MjA4NzI1NzE4Nn0.E_8K6q7dI7Og4BxkobGbsj_NpfzLayT-0UBCHKFVnHo',
+    url: 'https://xxxxxxxxxx.supabase.co',
+    anonKey: 'copy-API-anonKeyAnda',
   );
 
   runApp(const SakuPintarApp());
