@@ -1,0 +1,627 @@
+{
+  "name": "main-agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat-keuangan",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1168,
+        -320
+      ],
+      "id": "7607aad2-7231-4df7-a697-527f1582c8bb",
+      "name": "Webhook",
+      "webhookId": "294b325b-6433-4fb5-8aee-9e80caa0cfda"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=={{ $json.body.chatInput }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1024,
+        -304
+      ],
+      "id": "e5102960-cc3c-4556-8463-75858244068f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "=={{ $json.body.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -880,
+        -112
+      ],
+      "id": "ab5a2789-231a-4307-a1bc-d8d6fd30020c",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -1184,
+        -176
+      ],
+      "id": "efdc1c24-13d7-4327-8d58-bdf9e192dd34",
+      "name": "When chat message received",
+      "webhookId": "9156cc57-1553-4252-9c1c-90a8711fce09"
+    },
+    {
+      "parameters": {
+        "description": "Gunakan alat ini untuk mencatat PENGELUARAN uang. Gunakan JIKA pengguna menyebutkan membeli sesuatu atau membayar sesuatu (contoh: 'beli kopi 35rb', 'bayar kosan 1jt'). Ekstrak data menjadi: kategori (misal: Makanan, Transportasi), item (nama barang), dan harga (angka murni)",
+        "workflowId": {
+          "__rl": true,
+          "value": "0TcxFqMMD8z3TruW",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/0TcxFqMMD8z3TruW",
+          "cachedResultName": "sub-catat-pengeluaran"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "harga": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('harga', ``, 'number') }}",
+            "kategori": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('kategori', ``, 'string') }}",
+            "item": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('item', ``, 'string') }}",
+            "tipe": "keluar"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "kategori",
+              "displayName": "kategori",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "item",
+              "displayName": "item",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "harga",
+              "displayName": "harga",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "tipe",
+              "displayName": "tipe",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -288,
+        -240
+      ],
+      "id": "1a9835e1-27ec-49c7-ba73-3f6434fad0bf",
+      "name": "Call 'sub-catat-pengeluaran'"
+    },
+    {
+      "parameters": {
+        "description": "Gunakan alat ini untuk mencatat PEMASUKAN/PENDAPATAN uang. Gunakan JIKA pengguna menyebutkan menerima uang (contoh: 'gaji masuk 5jt', 'nemu duit 20rb'). Ekstrak data menjadi: kategori (misal: Gaji, Bonus, Hibah), item (sumber uang), dan harga (angka murni)",
+        "workflowId": {
+          "__rl": true,
+          "value": "frUVCyFu1vQGeTRb",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/frUVCyFu1vQGeTRb",
+          "cachedResultName": "sub-catat-pemasukan"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "harga": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('harga', ``, 'number') }}",
+            "kategori": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('kategori', ``, 'string') }}",
+            "item": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('item', ``, 'string') }}",
+            "tipe": "masuk"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "kategori",
+              "displayName": "kategori",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "item",
+              "displayName": "item",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "harga",
+              "displayName": "harga",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "tipe",
+              "displayName": "tipe",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -416,
+        -240
+      ],
+      "id": "26f0f827-9b62-4c45-a35b-a7ade82564f7",
+      "name": "Call 'sub-catat-pemasukan'"
+    },
+    {
+      "parameters": {
+        "description": "Gunakan alat ini saat pengguna bertanya tentang sisa saldo, total uang saat ini, atau ringkasan pemasukan dan pengeluaran. Alat ini akan mengambil data dari database dan menghitung selisihnya untuk memberikan saldo akhir.",
+        "workflowId": {
+          "__rl": true,
+          "value": "BIBKybh9vBQMktVC",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/BIBKybh9vBQMktVC",
+          "cachedResultName": "catat-sisa-saldo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -560,
+        -240
+      ],
+      "id": "17ecfc40-b7c7-47bb-a1dd-adcd79ae0ef2",
+      "name": "Call n8n Workflow Tool"
+    },
+    {
+      "parameters": {
+        "model": "qwen3-coder:480b-cloud",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        -112
+      ],
+      "id": "abef9884-331c-454c-9208-c15ebc3ef609",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "5ErrXHvbZ4jmu9yY",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        0
+      ],
+      "id": "91b3a3fe-2ef6-42a8-8bd7-0675831e2934",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "5SFJGwBZq69N4rRw",
+          "name": "Supabase account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Gunakan alat ini KHUSUS untuk mencari informasi, teori, tips, aturan menabung, atau penjelasan umum tentang investasi, saham, dan crypto (misalnya saat pengguna bertanya 'Bagaimana cara...', 'Apa itu...', atau meminta saran keuangan teoritis). PENTING: HANYA gunakan alat ini untuk menjawab pertanyaan teori. JANGAN PERNAH gunakan alat ini untuk merekomendasikan saham spesifik, memilih instrumen berdasarkan saldo, atau mengecek harga saham/crypto saat ini."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        -784,
+        -112
+      ],
+      "id": "4239a85f-b198-4881-8784-abe3006b3294",
+      "name": "konsultasi_keuangan"
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        32
+      ],
+      "id": "829dff4e-88c2-4927-a104-cc34dbb61516",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "5ErrXHvbZ4jmu9yY",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen3-coder:480b-cloud",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmOllama",
+      "typeVersion": 1,
+      "position": [
+        -736,
+        32
+      ],
+      "id": "9da93be4-4fcc-44f3-8302-d2f41a87747d",
+      "name": "Ollama Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "5ErrXHvbZ4jmu9yY",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Gunakan tool ini khusus untuk mengecek harga saham Indonesia (IHSG) secara real-time. Kamu wajib memasukkan kode saham 4 huruf ke dalam parameter.",
+        "url": "https://script.google.com/macros/s/AKfycbzR-WLjuG-9D4PNXNYjyDyO1NGEqgDLC2kwxXjmgTLrShmAlU72YCbmrICRsf5N1A8/exec",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "symbol",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `Kode saham IHSG yang dicari (contoh: BBCA, GOTO, BMRI)`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        -336,
+        -416
+      ],
+      "id": "51b67c2f-72a1-45d0-8f33-b03a0dd6735a",
+      "name": "harga saham"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Gunakan tool ini untuk mengambil SELURUH harga crypto di Indodax secara real-time. Cari nama koin (seperti btc_idr, eth_idr, dll) di dalam hasil JSON untuk menjawab pertanyaan user.",
+        "url": "https://indodax.com/api/tickers",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        -640,
+        -416
+      ],
+      "id": "c78fdd06-0f1f-4c44-bf2c-76c44d2bc5b2",
+      "name": "harga crypto"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Gunakan tool ini JIKA user meminta rekomendasi crypto, menanyakan koin apa yang sedang bagus, atau koin yang sedang tren saat ini",
+        "url": "https://api.coingecko.com/api/v3/search/trending",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        -496,
+        -416
+      ],
+      "id": "6e6115a7-e636-46ef-8bfd-ba8a0f3e77f8",
+      "name": "rekomendasi crypto"
+    },
+    {
+      "parameters": {
+        "description": "WAJIB GUNAKAN tool ini untuk mencari profil, harga, dan prediksi saham IHSG (termasuk jika user tanya 1 saham spesifik seperti TPIA, BBCA, dll). Masukkan nama saham yang ditanyakan user ke dalam input query_saham. Tool ini akan mengembalikan daftar data saham valid dari server. Baca hasilnya dan berikan ke user.",
+        "workflowId": {
+          "__rl": true,
+          "value": "XwU6e6iFmGoJRpnl",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/XwU6e6iFmGoJRpnl",
+          "cachedResultName": "My Sub-Workflow 1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        -400
+      ],
+      "id": "8eb69429-8839-430b-af35-3b006aa78baf",
+      "name": "get_stock_predictions"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'sub-catat-pengeluaran'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'sub-catat-pemasukan'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call n8n Workflow Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "konsultasi_keuangan",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "konsultasi_keuangan": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "konsultasi_keuangan",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "harga saham": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "harga crypto": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "rekomendasi crypto": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_stock_predictions": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "58bf3dd3-7dbe-459a-84ed-23c341c4846c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "745c47014d44467846cef9a9e707ee25f0e61859270eff48e9daf4c38f160203"
+  },
+  "id": "O6YIoKCcCrnrFRRJ",
+  "tags": []
+}

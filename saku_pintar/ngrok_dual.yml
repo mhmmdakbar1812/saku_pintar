@@ -1,0 +1,10 @@
+version: "2"
+authtoken: 2Owkr417max3subZVDhuuvzwzO9_3JNNADqjYix2ugh5qNUUJ
+tunnels:
+  n8n-server:
+    proto: http
+    addr: 5678
+    domain: gawkiest-thurman-sternmost.ngrok-free.dev
+  predict-api:
+    proto: http
+    addr: 8000

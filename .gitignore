@@ -1,0 +1,14 @@
+# Mengabaikan data rahasia n8n & Docker
+n8n_data/
+.n8n/
+.env
+
+# Mengabaikan file Python yang tidak perlu
+__pycache__/
+*.pyc
+venv/
+env/
+
+# Mengabaikan file build Flutter
+saku_pintar_flutter/build/
+saku_pintar_flutter/.dart_tool/

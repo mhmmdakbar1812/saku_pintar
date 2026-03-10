@@ -1,0 +1,13 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n_local
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_ENCRYPTION_KEY=Abaneon1812 # Sangat Penting!
+      - TZ=Asia/Jakarta
+      - N8N_SECURE_COOKIE=false  # Tambahkan baris ini
+    volumes:
+      - ./n8n_data:/home/node/.n8n

@@ -1,0 +1,29 @@
+name: saku_pintar
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  dio: ^5.4.1                # Untuk API Integration ke Webhook n8n
+  speech_to_text: ^7.3.0     # Untuk Voice-to-Text
+  fl_chart: ^0.66.0          # Untuk Dashboard grafik keuangan
+  supabase_flutter: ^2.4.0   # Untuk Fetch data saldo/transaksi langsung
+  chat_bubbles: ^1.5.0       # (Opsional) Untuk UI Chat yang cantik
+  uuid: ^4.2.1
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  rename_app: ^1.4.1
+
+flutter:
+  uses-material-design: true
+
+rename_app:
+  name: "Saku Pintar"
